@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The POWER Purpose Project</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red-deep: #8c1515;
+    --red-mid: #c02a2a;
+    --red-soft: #d94f4f;
+    --red-blush: #e88080;
+    --red-mist: #fbeaea;
+    --black: #111111;
+    --charcoal: #2d2d2d;
+    --grey: #5a5a5a;
+    --light-grey: #a8a8a8;
+    --off-white: #fafafa;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.4s ease;
+  }
+  .nav.scrolled {
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.07);
+    padding: 14px 40px;
+  }
+  .nav-logo {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--black);
+    text-decoration: none;
+  }
+  .nav-logo span {
+    background: linear-gradient(135deg, var(--red-deep) 0%, var(--red-soft) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .nav-cta {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red-mid);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .nav-cta:hover { border-bottom-color: var(--red-mid); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 100px 24px 80px;
+    overflow: hidden;
+    background: var(--white);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 55% at 50% 0%, rgba(192,42,42,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 8% 100%, rgba(140,21,21,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 35% at 92% 85%, rgba(217,79,79,0.04) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-drop-line {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 100px;
+    background: linear-gradient(to bottom, transparent, rgba(140,21,21,0.2));
+    animation: dropIn 1.2s ease forwards;
+  }
+  @keyframes dropIn {
+    from { height: 0; opacity: 0; }
+    to { height: 100px; opacity: 1; }
+  }
+
+  .hero-eyebrow {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--red-mid);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s ease forwards;
+  }
+
+  .hero-verse-block {
+    background: var(--red-mist);
+    border-left: 3px solid var(--red-mid);
+    padding: 18px 28px;
+    max-width: 580px;
+    margin-bottom: 36px;
+    text-align: left;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.5s ease forwards;
+  }
+  .hero-verse-text {
+    font-size: 13px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--charcoal);
+    line-height: 1.75;
+    margin-bottom: 8px;
+  }
+  .hero-verse-ref {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--red-mid);
+  }
+
+  .hero-title {
+    font-size: clamp(36px, 7vw, 84px);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--black);
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.75s ease forwards;
+  }
+  .hero-title .accent {
+    background: linear-gradient(135deg, var(--red-deep) 0%, var(--red-soft) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(12px, 1.4vw, 15px);
+    font-weight: 400;
+    color: var(--grey);
+    letter-spacing: 0.03em;
+    line-height: 1.75;
+    max-width: 560px;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.95s ease forwards;
+  }
+
+  .hero-divider {
+    width: 48px;
+    height: 2px;
+    background: linear-gradient(to right, var(--red-deep), var(--red-soft));
+    margin: 0 auto 40px;
+    opacity: 0;
+    animation: fadeIn 1s 1.1s ease forwards;
+  }
+
+  .cta-primary {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--red-deep) 0%, var(--red-mid) 100%);
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 20px 48px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: fadeUp 0.9s 1.3s ease forwards;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.1);
+    transform: translateX(-100%);
+    transition: transform 0.4s ease;
+  }
+  .cta-primary:hover::after { transform: translateX(0); }
+  .cta-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(140,21,21,0.28); }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 30px; left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeIn 1s 2.2s ease forwards;
+  }
+  .hero-scroll-hint span {
+    font-size: 8px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--light-grey);
+  }
+  .scroll-line {
+    width: 1px; height: 38px;
+    background: linear-gradient(to bottom, var(--light-grey), transparent);
+    animation: scrollPulse 2s 2.5s infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(0.7); }
+  }
+
+  /* MISSION */
+  .mission {
+    padding: 120px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .section-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    color: var(--red-mid);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 30px; height: 1px;
+    background: var(--red-mid);
+    flex-shrink: 0;
+  }
+  .mission-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .mission-headline {
+    font-size: clamp(28px, 3.5vw, 46px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--black);
+  }
+  .mission-headline em {
+    font-style: italic;
+    font-weight: 300;
+    text-transform: none;
+    color: var(--red-mid);
+  }
+  .mission-body p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.95;
+    color: var(--charcoal);
+    margin-bottom: 22px;
+  }
+  .mission-body p:last-child { margin-bottom: 0; }
+  .mission-body strong { font-weight: 700; color: var(--black); }
+
+  /* DISCOUNT BANNER */
+  .discount-banner {
+    background: linear-gradient(135deg, var(--red-deep) 0%, var(--red-mid) 100%);
+    padding: 80px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .discount-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .discount-banner-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .discount-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+  .discount-label::before,
+  .discount-label::after {
+    content: '';
+    display: block;
+    width: 40px; height: 1px;
+    background: rgba(255,255,255,0.25);
+  }
+  .discount-headline {
+    font-size: clamp(18px, 2.8vw, 28px);
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--white);
+    line-height: 1.35;
+    margin-bottom: 20px;
+  }
+  .discount-sub {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.85;
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  /* PILLARS */
+  .pillars {
+    background: var(--red-mist);
+    padding: 100px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pillars::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(192,42,42,0.18), transparent);
+  }
+  .pillars-inner { max-width: 1100px; margin: 0 auto; }
+  .pillars-header { text-align: center; margin-bottom: 60px; }
+  .pillars-title {
+    font-size: clamp(24px, 3vw, 38px);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: var(--black);
+    margin-bottom: 14px;
+  }
+  .pillars-sub {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--grey);
+    max-width: 440px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .pillar {
+    background: var(--white);
+    padding: 44px 36px;
+    transition: all 0.3s ease;
+  }
+  .pillar:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 48px rgba(140,21,21,0.08);
+    z-index: 2;
+    position: relative;
+  }
+  .pillar-num {
+    font-size: 52px;
+    font-weight: 900;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--red-blush);
+    margin-bottom: 20px;
+    display: block;
+  }
+  .pillar-title {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--black);
+    margin-bottom: 14px;
+  }
+  .pillar-text {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--grey);
+  }
+
+  /* CLIENTS */
+  .clients {
+    padding: 120px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .clients-header { margin-bottom: 60px; }
+  .clients-title {
+    font-size: clamp(28px, 3.5vw, 46px);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: var(--black);
+    line-height: 1.1;
+    max-width: 600px;
+    margin-bottom: 16px;
+  }
+  .clients-title em {
+    font-style: italic;
+    font-weight: 300;
+    text-transform: none;
+    color: var(--red-mid);
+  }
+  .clients-intro {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--grey);
+    line-height: 1.85;
+    max-width: 540px;
+  }
+  .clients-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-bottom: 60px;
+  }
+  .client-card {
+    background: var(--off-white);
+    padding: 36px 32px;
+    border-left: 3px solid transparent;
+    transition: all 0.3s ease;
+  }
+  .client-card:hover {
+    border-left-color: var(--red-mid);
+    background: var(--white);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+  }
+  .client-name {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--black);
+    margin-bottom: 10px;
+  }
+  .client-desc {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--grey);
+    line-height: 1.8;
+  }
+  .client-tag {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--red-mid);
+    border: 1px solid var(--red-blush);
+    padding: 4px 10px;
+  }
+
+  /* STATS BAND */
+  .stats-band {
+    background: var(--black);
+    padding: 80px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .stats-band::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 100% 0%, rgba(140,21,21,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 0% 100%, rgba(217,79,79,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .stats-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .stat-item {
+    padding: 52px 40px;
+    border: 1px solid rgba(255,255,255,0.06);
+    text-align: center;
+  }
+  .stat-num {
+    font-size: clamp(48px, 6vw, 72px);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+  }
+  .stat-num span {
+    background: linear-gradient(135deg, var(--red-soft) 0%, var(--red-blush) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+  .stat-discount {
+    grid-column: 1 / -1;
+    padding: 52px 48px;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-top: 2px solid var(--red-mid);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  .stat-discount-eyebrow {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    color: var(--red-soft);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .stat-discount-eyebrow::before,
+  .stat-discount-eyebrow::after {
+    content: '';
+    display: block;
+    width: 24px; height: 1px;
+    background: var(--red-soft);
+    opacity: 0.4;
+  }
+  .stat-discount-text {
+    font-size: clamp(14px, 2vw, 20px);
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--white);
+    line-height: 1.4;
+    max-width: 680px;
+  }
+  .stat-discount-sub {
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.45);
+    max-width: 560px;
+    line-height: 1.85;
+  }
+
+  /* QUOTE */
+  .quote-section {
+    padding: 120px 24px;
+    max-width: 780px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .quote-mark {
+    font-size: 80px;
+    font-weight: 900;
+    line-height: 0.5;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--red-blush);
+    display: block;
+    margin-bottom: 28px;
+  }
+  .quote-text {
+    font-size: clamp(15px, 1.8vw, 20px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--charcoal);
+    line-height: 1.8;
+    margin-bottom: 28px;
+  }
+  .quote-attr {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--red-mid);
+  }
+
+
+  /* CONTACT */
+  .contact {
+    background: var(--black);
+    padding: 120px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 100% 0%, rgba(140,21,21,0.16) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 0% 100%, rgba(217,79,79,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .contact-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: start;
+  }
+  .contact-eyebrow {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+    color: var(--red-soft);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .contact-eyebrow::before {
+    content: '';
+    display: block;
+    width: 30px; height: 1px;
+    background: var(--red-soft);
+    flex-shrink: 0;
+  }
+  .contact-headline {
+    font-size: clamp(28px, 3.5vw, 46px);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .contact-headline em {
+    font-style: italic;
+    font-weight: 300;
+    text-transform: none;
+    background: linear-gradient(135deg, var(--red-soft) 0%, var(--red-blush) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .contact-body {
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+  .contact-discount-note {
+    background: rgba(192,42,42,0.12);
+    border-left: 2px solid var(--red-mid);
+    padding: 14px 18px;
+    margin-bottom: 32px;
+  }
+  .contact-discount-note p {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--red-soft);
+    line-height: 1.65;
+  }
+  .contact-person {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .contact-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--red-deep), var(--red-soft));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  .contact-person-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 3px;
+  }
+  .contact-person-title {
+    font-size: 10px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.35);
+  }
+  .form-group { margin-bottom: 18px; }
+  .form-label {
+    display: block;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 9px;
+  }
+  .form-input,
+  .form-textarea,
+  .form-select {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.09);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    padding: 13px 16px;
+    outline: none;
+    transition: all 0.3s ease;
+    appearance: none;
+    border-radius: 0;
+  }
+  .form-select option { background: #2d2d2d; color: var(--white); }
+  .form-input::placeholder,
+  .form-textarea::placeholder { color: rgba(255,255,255,0.18); }
+  .form-input:focus,
+  .form-textarea:focus,
+  .form-select:focus {
+    border-color: rgba(192,42,42,0.5);
+    background: rgba(192,42,42,0.05);
+  }
+  .form-textarea { resize: vertical; min-height: 108px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-submit {
+    width: 100%;
+    background: linear-gradient(135deg, var(--red-deep) 0%, var(--red-mid) 100%);
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    padding: 18px 32px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 6px;
+  }
+  .form-submit:hover {
+    box-shadow: 0 12px 32px rgba(140,21,21,0.35);
+    transform: translateY(-2px);
+  }
+  .form-note {
+    font-size: 10px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.22);
+    text-align: center;
+    margin-top: 12px;
+    line-height: 1.6;
+  }
+  .form-success { display: none; text-align: center; padding: 48px 20px; }
+  .success-icon { font-size: 44px; display: block; margin-bottom: 18px; }
+  .success-title {
+    font-size: 22px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .success-text {
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.8;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: #080808;
+    padding: 36px 24px;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+  .footer-logo {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 10px;
+  }
+  .footer-logo span {
+    background: linear-gradient(135deg, var(--red-deep) 0%, var(--red-soft) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .footer-text {
+    font-size: 10px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.18);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    .mission-grid,
+    .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+    .pillars-grid,
+    .clients-grid { grid-template-columns: 1fr; }
+    .stats-inner { grid-template-columns: 1fr; }
+    .stat-discount { grid-column: 1; }
+    .form-row { grid-template-columns: 1fr; }
+    .nav { padding: 16px 20px; }
+    .nav.scrolled { padding: 12px 20px; }
+    .hero-verse-block { padding: 14px 20px; }
+    .stat-discount { padding: 36px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <a href="https://powermarketingcompany.com" class="nav-logo"><span>POWER</span> Marketing</a>
+  <a href="#contact" class="nav-cta">Get in Touch</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-drop-line"></div>
+
+  <div class="hero-eyebrow">A POWER Marketing Initiative</div>
+
+  <div class="hero-verse-block">
+    <p class="hero-verse-text">"Let your light shine before others, that they may see your good deeds and glorify your Father in heaven."</p>
+    <p class="hero-verse-ref">Matthew 5:16</p>
+  </div>
+
+  <h1 class="hero-title">The <span class="accent">POWER</span><br>Purpose Project</h1>
+
+  <p class="hero-subtitle">Serving the businesses and entrepreneurs dedicated to shining light throughout all of God's Kingdom.</p>
+
+  <div class="hero-divider"></div>
+
+  <a href="#contact" class="cta-primary">Learn More About Our Mission</a>
+
+  <div class="hero-scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="mission" id="mission">
+  <div class="section-label reveal">Our Mission</div>
+  <div class="mission-grid">
+    <div class="reveal">
+      <h2 class="mission-headline">Built for those doing<br><em>God's work</em><br>every day.</h2>
+    </div>
+    <div class="mission-body reveal">
+      <p>Some business owners wake up every day with a purpose that goes far beyond revenue. They are building something that serves their community, reflects their faith, and leaves the world better than they found it. That work matters. And it deserves a marketing partner who actually gets it.</p>
+      <p>The POWER Purpose Project is our commitment to that community. We bring <strong>the same full-service agency firepower</strong> that has scaled over 180 businesses nationwide directly to faith-forward entrepreneurs and organizations who are ready to grow. No watered-down service. No generic strategy. Just real results, built around your mission.</p>
+      <p>This is not a new idea for us. We have been doing this work for years and we are proud of every single one of these partnerships. Now we are making it official and opening the door wider.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DISCOUNT BANNER -->
+<div class="discount-banner">
+  <div class="discount-banner-inner reveal">
+    <div class="discount-label">Our Commitment</div>
+    <p class="discount-headline">Offering Discounted Services to Surround Ourselves with God's People, While Helping Lift Up Their Daily Work</p>
+    <p class="discount-sub">This is not a promotional offer. This is a conviction. We believe in what you are building, and we want to put our best work behind it at a price point that makes growth accessible for faith-forward organizations of every size.</p>
+  </div>
+</div>
+
+<!-- PILLARS -->
+<section class="pillars">
+  <div class="pillars-inner">
+    <div class="pillars-header reveal">
+      <h2 class="pillars-title">What You Can Expect</h2>
+      <p class="pillars-sub">When POWER is in your corner, here is what that partnership looks like.</p>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar reveal">
+        <span class="pillar-num">01</span>
+        <div class="pillar-title">Strategy Built Around Your Mission</div>
+        <p class="pillar-text">We do not run cookie-cutter campaigns. We start with your story, your audience, and your goals. Every decision we make connects back to what you are building and who you are trying to serve.</p>
+      </div>
+      <div class="pillar reveal">
+        <span class="pillar-num">02</span>
+        <div class="pillar-title">A Full Team in Your Corner</div>
+        <p class="pillar-text">Paid advertising, SEO, website development, CRM automation, creative production. You get the full POWER team working as an extension of yours. One partner. No gaps. Everything handled.</p>
+      </div>
+      <div class="pillar reveal">
+        <span class="pillar-num">03</span>
+        <div class="pillar-title">Results You Can See</div>
+        <p class="pillar-text">We are results-oriented and data-driven. Our clients get transparent reporting, direct access to POWER leadership, and a clear picture of how their marketing investment is performing at all times.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section class="clients" id="clients">
+  <div class="clients-header reveal">
+    <div class="section-label">Success Stories</div>
+    <h2 class="clients-title">Faith-forward brands we are <em>proud</em> to grow.</h2>
+    <p class="clients-intro">We treat every client like a partner. These organizations trusted us with their growth and we delivered. Here is a look at some of the faith-forward businesses already in the POWER family.</p>
+  </div>
+  <div class="clients-grid">
+    <div class="client-card reveal">
+      <div class="client-name">Immeasurably 320</div>
+      <p class="client-desc">A ministry brand built on the promise that God can do immeasurably more than we could ever ask or imagine. We help them reach more people with that message.</p>
+      <span class="client-tag">Ministry &amp; Faith Brand</span>
+    </div>
+    <div class="client-card reveal">
+      <div class="client-name">Diesel Sports Complex</div>
+      <p class="client-desc">A faith-centered athletic training facility that develops young athletes in sport, discipline, and character. We run their digital advertising and help them fill their programs.</p>
+      <span class="client-tag">Youth Sports &amp; Training</span>
+    </div>
+    <div class="client-card reveal">
+      <div class="client-name">Pittsburgh Mortgage Guy</div>
+      <p class="client-desc">A Pittsburgh-based mortgage professional who leads with integrity and relationships. We built the marketing system that keeps his pipeline full and his brand front of mind.</p>
+      <span class="client-tag">Real Estate &amp; Finance</span>
+    </div>
+    <div class="client-card reveal">
+      <div class="client-name">La Famiglia</div>
+      <p class="client-desc">A family business built on loyalty, genuine hospitality, and deep community roots. We help them attract new customers and stay connected to the people who matter most.</p>
+      <span class="client-tag">Family Business</span>
+    </div>
+    <div class="client-card reveal">
+      <div class="client-name">CEO Zones</div>
+      <p class="client-desc">A coaching and entrepreneurship community built for leaders who believe their business is a platform for something bigger. We grow their brand and drive enrollment for their programs.</p>
+      <span class="client-tag">Coaching &amp; Community</span>
+    </div>
+    <div class="client-card reveal">
+      <div class="client-name">Rock N Ball Wines</div>
+      <p class="client-desc">A lifestyle wine brand rooted in community and good company. We built their digital presence and help them connect with customers who share their love for the experience.</p>
+      <span class="client-tag">Lifestyle Brand</span>
+    </div>
+    <div class="client-card reveal">
+      <div class="client-name">Nutley Family Service Bureau</div>
+      <p class="client-desc">A community nonprofit that has been serving families in Nutley for over a century. We support their marketing so they can stay focused on the people who need them most.</p>
+      <span class="client-tag">Nonprofit &amp; Community</span>
+    </div>
+    <div class="client-card reveal">
+      <div class="client-name">Union Catholic</div>
+      <p class="client-desc">One of New Jersey's premier Catholic high schools, developing leaders in faith, academics, and athletics. We manage their digital marketing to drive enrollment and build the brand.</p>
+      <span class="client-tag">Catholic Education</span>
+    </div>
+    <div class="client-card reveal">
+      <div class="client-name">Flowly</div>
+      <p class="client-desc">A wellness technology platform helping people manage pain and find calm through science-backed, drug-free solutions. We helped scale their digital reach and grow their user base.</p>
+      <span class="client-tag">Wellness &amp; Health</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS / DISCOUNT BAND -->
+<section class="stats-band">
+  <div class="stats-inner">
+    <div class="stat-item reveal">
+      <div class="stat-num"><span>180+</span></div>
+      <div class="stat-label">Active Clients Nationwide</div>
+    </div>
+    <div class="stat-item reveal">
+      <div class="stat-num"><span>Full</span></div>
+      <div class="stat-label">Service Digital Agency</div>
+    </div>
+    <div class="stat-discount reveal">
+      <div class="stat-discount-eyebrow">The Purpose Promise</div>
+      <p class="stat-discount-text">Offering Discounted Services to Surround Ourselves with God's People, While Helping Lift Up Their Daily Work</p>
+      <p class="stat-discount-sub">Faith-forward businesses and organizations receive discounted access to POWER's full suite of marketing services. Our commitment is to grow the people doing good in the world at a price that reflects how much we believe in their work.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="quote-section">
+  <span class="quote-mark reveal">"</span>
+  <p class="quote-text reveal">God blessed my team and I with unique abilities. These skills coincide with being able to help shine the great work that God's people are doing each and every day across their business efforts. This Purpose Project Initiative is our best attempt to follow in his footsteps, and help others that are hoping to achieve the same. This is meaningful work. Work that we are beyond passionate about, and that will be seen in every act of service we provide.</p>
+  <p class="quote-attr reveal">Colton Hower, Founder &amp; CEO, POWER Marketing Company</p>
+</section>
+
+
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left reveal">
+      <div class="contact-eyebrow">Get in Touch</div>
+      <h2 class="contact-headline">Let's build<br>something<br><em>that matters.</em></h2>
+      <p class="contact-body">If you are a faith-forward business or organization ready to grow, we want to hear about it. Tell us what you are building and what you need. Colton personally reviews every submission and will follow up directly.</p>
+      <div class="contact-discount-note">
+        <p>Purpose Project partners receive discounted rates across POWER's full service offering. Mention the Purpose Project when you reach out.</p>
+      </div>
+      <div class="contact-person">
+        <div class="contact-avatar">CH</div>
+        <div>
+          <div class="contact-person-name">Colton Hower</div>
+          <div class="contact-person-title">Founder &amp; CEO, POWER Marketing Company</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal" id="contactForm">
+      <div class="form-fields">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-input" id="firstName" placeholder="John">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-input" id="lastName" placeholder="Smith">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" id="email" placeholder="john@yourbusiness.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Business or Organization Name</label>
+          <input type="text" class="form-input" id="business" placeholder="Your Organization">
+        </div>
+        <div class="form-group">
+          <label class="form-label">What best describes your work?</label>
+          <select class="form-select" id="category">
+            <option value="" disabled selected>Select a category</option>
+            <option>Church / Ministry</option>
+            <option>Faith-Based Nonprofit</option>
+            <option>Christian Business / Entrepreneur</option>
+            <option>Faith-Forward School or Institution</option>
+            <option>Wellness / Health with Purpose</option>
+            <option>Community Service Organization</option>
+            <option>Other Mission-Driven Business</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tell us about your mission and what you need</label>
+          <textarea class="form-textarea" id="message" placeholder="Share a bit about what you are building and how we can help..."></textarea>
+        </div>
+        <button class="form-submit" onclick="handleSubmit()">Send to Colton</button>
+        <p class="form-note">Every submission is read personally. You will hear back within 1 to 2 business days.</p>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <span class="success-icon">&#10013;</span>
+        <div class="success-title">Message Received.</div>
+        <p class="success-text">Thank you for reaching out. Colton will personally review your message and get back to you within 1 to 2 business days. We look forward to learning more about what you are building.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-logo"><span>POWER</span> Purpose Project</div>
+  <p class="footer-text">An initiative of POWER Marketing Company &nbsp;&middot;&nbsp; Pittsburgh, PA &nbsp;&middot;&nbsp; powermarketingcompany.com</p>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  document.querySelectorAll('.pillars-grid, .clients-grid').forEach(grid => {
+    grid.querySelectorAll('.reveal').forEach((child, i) => {
+      child.style.transitionDelay = `${i * 75}ms`;
+    });
+  });
+
+  function handleSubmit() {
+    const fields = ['firstName', 'lastName', 'email', 'business', 'category', 'message'];
+    let valid = true;
+    fields.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) {
+        el.style.borderColor = 'rgba(192,42,42,0.6)';
+        valid = false;
+      } else {
+        el.style.borderColor = '';
+      }
+    });
+    if (!valid) return;
+    document.getElementById('contactForm').querySelector('.form-fields').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  }
+</script>
+</body>
+</html>
