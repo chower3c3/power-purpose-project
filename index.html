@@ -50,20 +50,19 @@
     box-shadow: 0 1px 0 rgba(0,0,0,0.07);
     padding: 14px 40px;
   }
-  .nav-logo {
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--black);
+  .nav-logo-img {
+    display: block;
     text-decoration: none;
+    height: 36px;
   }
-  .nav-logo span {
-    background: linear-gradient(135deg, var(--red-deep) 0%, var(--red-soft) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .nav-logo-img img {
+    height: 36px;
+    width: auto;
+    display: block;
+    transition: opacity 0.3s ease;
   }
+  /* Show Red and Black logo always */
+  .nav-logo-light { display: block; }
   .nav-cta {
     font-size: 9px;
     font-weight: 700;
@@ -114,7 +113,7 @@
   }
 
   .hero-eyebrow {
-    font-size: 9px;
+    font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.4em;
     text-transform: uppercase;
@@ -217,33 +216,6 @@
   }
   .cta-primary:hover::after { transform: translateX(0); }
   .cta-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(140,21,21,0.28); }
-
-  .hero-scroll-hint {
-    position: absolute;
-    bottom: 30px; left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    opacity: 0;
-    animation: fadeIn 1s 2.2s ease forwards;
-  }
-  .hero-scroll-hint span {
-    font-size: 8px;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: var(--light-grey);
-  }
-  .scroll-line {
-    width: 1px; height: 38px;
-    background: linear-gradient(to bottom, var(--light-grey), transparent);
-    animation: scrollPulse 2s 2.5s infinite;
-  }
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.4; transform: scaleY(1); }
-    50% { opacity: 1; transform: scaleY(0.7); }
-  }
 
   /* MISSION */
   .mission {
@@ -822,29 +794,91 @@
 
   /* FOOTER */
   .footer {
-    background: #080808;
-    padding: 36px 24px;
-    text-align: center;
-    border-top: 1px solid rgba(255,255,255,0.04);
+    background: #0d0d0d;
+    border-top: 1px solid rgba(255,255,255,0.05);
   }
-  .footer-logo {
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.28em;
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    padding: 72px 0 56px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .footer-logo-link {
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  .footer-logo-img {
+    height: 44px;
+    width: auto;
+    display: block;
+  }
+  .footer-tagline {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
-    margin-bottom: 10px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 14px;
   }
-  .footer-logo span {
-    background: linear-gradient(135deg, var(--red-deep) 0%, var(--red-soft) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .footer-sub {
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.35);
+    line-height: 1.85;
+    max-width: 280px;
   }
-  .footer-text {
+  .footer-col-label {
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--red-soft);
+    margin-bottom: 16px;
+  }
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .footer-links li a {
+    font-size: 12px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    letter-spacing: 0.02em;
+  }
+  .footer-links li a:hover { color: var(--white); }
+  .footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .footer-copy {
     font-size: 10px;
     font-weight: 300;
-    color: rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.04em;
+  }
+  .footer-initiative {
+    color: rgba(255,255,255,0.15);
+  }
+  @media (max-width: 900px) {
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+  }
+  @media (max-width: 540px) {
+    .footer-top { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 6px; }
   }
 
   /* ANIMATIONS */
@@ -874,6 +908,7 @@
     .form-row { grid-template-columns: 1fr; }
     .nav { padding: 16px 20px; }
     .nav.scrolled { padding: 12px 20px; }
+    .nav-logo-img img { height: 28px; }
     .hero-verse-block { padding: 14px 20px; }
     .stat-discount { padding: 36px 24px; }
   }
@@ -883,7 +918,9 @@
 
 <!-- NAV -->
 <nav class="nav" id="nav">
-  <a href="https://powermarketingcompany.com" class="nav-logo"><span>POWER</span> Marketing</a>
+  <a href="https://powermarketingcompany.com" class="nav-logo-img">
+    <img src="https://static.wixstatic.com/media/b541c4_01b26d4e2e564f4ab7f57cb7653237cc~mv2.png" alt="POWER Marketing Company" class="nav-logo-light">
+  </a>
   <a href="#contact" class="nav-cta">Get in Touch</a>
 </nav>
 
@@ -891,7 +928,7 @@
 <section class="hero">
   <div class="hero-drop-line"></div>
 
-  <div class="hero-eyebrow">A POWER Marketing Initiative</div>
+  <div class="hero-eyebrow">A POWER Initiative</div>
 
   <div class="hero-verse-block">
     <p class="hero-verse-text">"Let your light shine before others, that they may see your good deeds and glorify your Father in heaven."</p>
@@ -906,10 +943,6 @@
 
   <a href="#contact" class="cta-primary">Learn More About Our Mission</a>
 
-  <div class="hero-scroll-hint">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
-  </div>
 </section>
 
 <!-- MISSION -->
@@ -952,7 +985,7 @@
       <div class="pillar reveal">
         <span class="pillar-num">02</span>
         <div class="pillar-title">A Full Team in Your Corner</div>
-        <p class="pillar-text">Paid advertising, SEO, website development, CRM automation, creative production. You get the full POWER team working as an extension of yours. One partner. No gaps. Everything handled.</p>
+        <p class="pillar-text">Paid advertising, social media management, email marketing, website development, CRM automation, and creative production. You get the full POWER team working as an extension of yours. One partner. No gaps. Everything handled.</p>
       </div>
       <div class="pillar reveal">
         <span class="pillar-num">03</span>
@@ -1013,8 +1046,8 @@
     </div>
     <div class="client-card reveal">
       <div class="client-name">Flowly</div>
-      <p class="client-desc">A wellness technology platform helping people manage pain and find calm through science-backed, drug-free solutions. We helped scale their digital reach and grow their user base.</p>
-      <span class="client-tag">Wellness &amp; Health</span>
+      <p class="client-desc">An AI-driven software company building intelligent tools for real business operations. We support their marketing efforts as they bring smarter, more efficient solutions to the businesses they serve.</p>
+      <span class="client-tag">AI &amp; Software</span>
     </div>
   </div>
 </section>
@@ -1117,8 +1150,52 @@
 
 <!-- FOOTER -->
 <footer class="footer">
-  <div class="footer-logo"><span>POWER</span> Purpose Project</div>
-  <p class="footer-text">An initiative of POWER Marketing Company &nbsp;&middot;&nbsp; Pittsburgh, PA &nbsp;&middot;&nbsp; powermarketingcompany.com</p>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="https://powermarketingcompany.com" class="footer-logo-link">
+          <img src="https://static.wixstatic.com/media/68d40c_8eadf1d8761b4d2a997c8ede83cadc95~mv2.png" alt="POWER Marketing Company" class="footer-logo-img">
+        </a>
+        <p class="footer-tagline">Powerful Marketing Solutions That Drive Powerful Businesses.</p>
+        <p class="footer-sub">The POWER Purpose Project is an initiative dedicated to serving faith-forward businesses and entrepreneurs with full-service digital marketing at discounted rates.</p>
+      </div>
+      <div class="footer-nav-col">
+        <div class="footer-col-label">Company</div>
+        <ul class="footer-links">
+          <li><a href="https://www.powermarketingcompany.com/services">Services</a></li>
+          <li><a href="https://www.powermarketingcompany.com/about">About</a></li>
+          <li><a href="https://www.powermarketingcompany.com/team">Team</a></li>
+          <li><a href="https://www.powermarketingcompany.com/blog">Blog</a></li>
+          <li><a href="https://www.powermarketingcompany.com/careers">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-nav-col">
+        <div class="footer-col-label">Services</div>
+        <ul class="footer-links">
+          <li><a href="https://www.powermarketingcompany.com/services">Paid Advertising</a></li>
+          <li><a href="https://www.powermarketingcompany.com/services">Social Media</a></li>
+          <li><a href="https://www.powermarketingcompany.com/services">Email &amp; SMS</a></li>
+          <li><a href="https://www.powermarketingcompany.com/services">Web Development</a></li>
+          <li><a href="https://www.powermarketingcompany.com/services">CRM &amp; Automation</a></li>
+        </ul>
+      </div>
+      <div class="footer-nav-col">
+        <div class="footer-col-label">Get Started</div>
+        <ul class="footer-links">
+          <li><a href="#contact">Purpose Project Inquiry</a></li>
+          <li><a href="https://www.powermarketingcompany.com/contact">General Contact</a></li>
+        </ul>
+        <div class="footer-col-label" style="margin-top:24px;">Pittsburgh, PA</div>
+        <ul class="footer-links">
+          <li><a href="https://powermarketingcompany.com">powermarketingcompany.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">&copy; 2025 POWER Marketing Company. All Rights Reserved.</p>
+      <p class="footer-copy footer-initiative">The POWER Purpose Project &nbsp;&middot;&nbsp; An Initiative of POWER Marketing Company</p>
+    </div>
+  </div>
 </footer>
 
 <script>
